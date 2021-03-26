@@ -20,6 +20,10 @@
   },
   "homepage": "https://github.com/datalater/project-react-3-datalater#readme",
   "devDependencies": {
+    "@babel/core": "^7.13.10",
+    "@babel/preset-env": "^7.13.12",
+    "@babel/preset-react": "^7.12.13",
+    "babel-loader": "^8.2.2",
     "eslint": "^7.22.0",
     "eslint-config-airbnb": "^18.2.1",
     "eslint-plugin-import": "^2.22.1",
@@ -31,5 +35,9 @@
     "webpack": "^5.28.0",
     "webpack-cli": "^4.5.0",
     "webpack-dev-server": "^3.11.2"
+  },
+  "dependencies": {
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
   }
 }
