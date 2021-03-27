@@ -15,11 +15,11 @@ export default function MapContainer() {
     };
 
     setMap(container, options);
-  });
+  }, []);
 
   return (
     <>
-      <p>Kakao Map</p>
+      <div id="map" style={{ width: 500, height: 400 }} />
     </>
   );
 }
