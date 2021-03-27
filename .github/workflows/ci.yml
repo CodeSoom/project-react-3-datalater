@@ -20,9 +20,15 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - name: 03 Install a project with a clean slate
       run: npm ci
-    - name: 04 Build
+    - name: 04 Test
+      run: npm test
+      env:
+        HEADLESS: true
+    - name: 05 Lint
+      run: npm run lint
+    - name: 06 Build
       run: npm run build
-    - name: 05 Deploy
+    - name: 07 Deploy
       uses: peaceiris/actions-gh-pages@v3
       if: github.ref == 'refs/heads/main'
       with:

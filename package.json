@@ -7,7 +7,10 @@
     "start": "webpack serve",
     "build": "webpack build",
     "deploy": "gh-pages --remote upstream -d dist",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test:unit": "jest",
+    "coverage": "npm run test:unit -- --coverage",
+    "test": "npm run coverage",
+    "lint": "eslint --ext js,jsx ."
   },
   "repository": {
     "type": "git",
