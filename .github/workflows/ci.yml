@@ -12,19 +12,30 @@ jobs:
         node-version: [14.x]
 
     steps:
-    - name: 01 Check out repository
+    - name: Check out repository
       uses: actions/checkout@v2
-    - name: 02 Use Node.js ${{ matrix.node-version }}
+    - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - name: 03 Install a project with a clean slate
+    - name: Install a project with a clean slate
       run: npm ci
-    - name: 04 Build
+    - name: Create .env file
+      uses: SpicyPizza/create-envfile@v1
+      with:
+        envkey_API_KEY: ${{ secrets.API_KEY }}
+    - name: Test
+      run: npm test
+      env:
+        HEADLESS: true
+    - name: Lint
+      run: npm run lint
+    - name: Build
       run: npm run build
-    - name: 05 Deploy
+    - name: Deploy
       uses: peaceiris/actions-gh-pages@v3
       if: github.ref == 'refs/heads/main'
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: ./dist
+
