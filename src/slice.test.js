@@ -1,34 +1,68 @@
+import { getDefaultMiddleware } from '@reduxjs/toolkit';
+
+import configureStore from 'redux-mock-store';
+
 import reducer, {
-  addPlace,
   changeSearchField,
+  requestSearch,
+  setSearchResults,
 } from './slice';
+
+const middlewares = getDefaultMiddleware();
+const mockStore = configureStore(middlewares);
+
+jest.mock('./services/api');
+
+describe('actions', () => {
+  let store;
+
+  describe('requestSearch', () => {
+    beforeEach(() => {
+      store = mockStore({
+        searchFields: {
+          query: '',
+        },
+      });
+    });
+
+    it('dispatches setSearchResults', async () => {
+      await store.dispatch(requestSearch());
+
+      const actions = store.getActions();
+
+      expect(actions[0]).toEqual(setSearchResults([]));
+    });
+  });
+});
 
 describe('reducer', () => {
   it('changes search field', () => {
     const initialState = {
       searchFields: {
-        place: '',
+        query: '',
       },
     };
 
     const state = reducer(
       initialState,
-      changeSearchField({ name: 'place', value: '잠실역' }),
+      changeSearchField({ name: 'query', value: '잠실역' }),
     );
 
-    expect(state.searchFields.place).toBe('잠실역');
+    expect(state.searchFields.query).toBe('잠실역');
   });
 
-  it('adds place', () => {
+  it('changes search results', () => {
     const initialState = {
-      searchFields: {
-        place: '잠실역',
-      },
-      places: [],
+      searchResults: [],
     };
 
-    const state = reducer(initialState, addPlace());
+    const state = reducer(
+      initialState,
+      setSearchResults([
+        { id: 0, name: '잠실역', address: '잠실동 347' },
+      ]),
+    );
 
-    expect(state.places).toHaveLength(1);
+    expect(state.searchResults).toHaveLength(1);
   });
 });

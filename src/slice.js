@@ -1,16 +1,20 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+import {
+  postSearch,
+} from './services/api';
+
 const { actions, reducer } = createSlice({
   name: 'application',
   initialState: {
-    searchFields: {
-      place: '',
-    },
-    places: [],
     players: [
       { id: 0, name: 'A', address: '' },
       { id: 1, name: 'B', address: '' },
     ],
+    searchFields: {
+      query: '',
+    },
+    searchResults: [],
   },
   reducers: {
     changeSearchField(state, { payload: { name, value } }) {
@@ -25,12 +29,10 @@ const { actions, reducer } = createSlice({
       };
     },
 
-    addPlace(state) {
-      const { searchFields: { place }, places } = state;
-
+    setSearchResults(state, { payload: searchResults }) {
       return {
         ...state,
-        places: [...places, place],
+        searchResults,
       };
     },
   },
@@ -38,7 +40,17 @@ const { actions, reducer } = createSlice({
 
 export const {
   changeSearchField,
-  addPlace,
+  setSearchResults,
 } = actions;
+
+export function requestSearch() {
+  return async (dispatch, getState) => {
+    const { searchFields: { query } } = getState();
+
+    const searchResults = await postSearch(query);
+
+    dispatch(setSearchResults(searchResults));
+  };
+}
 
 export default reducer;

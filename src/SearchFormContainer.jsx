@@ -6,7 +6,7 @@ import SearchForm from './SearchForm';
 
 import {
   changeSearchField,
-  addPlace,
+  requestSearch,
 } from './slice';
 
 import {
@@ -19,18 +19,18 @@ export default function SearchFormContainer() {
 
   const places = useSelector(get('places'));
   const searchFields = useSelector(get('searchFields'));
-  const { place } = searchFields;
+  const { query } = searchFields;
 
   function handleChange({ name, value }) {
     dispatch(changeSearchField({ name, value }));
   }
 
   function handleSubmit() {
-    if (isEmptyString(place)) {
+    if (isEmptyString(query)) {
       return;
     }
 
-    dispatch(addPlace());
+    dispatch(requestSearch());
   }
 
   return (

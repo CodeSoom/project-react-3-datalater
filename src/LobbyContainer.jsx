@@ -23,13 +23,12 @@ export default function LobbyContainer() {
       <h2>출발지점을 입력하세요.</h2>
       <ul>
         {players.map(({ id, name }) => (
-
           <li key={id}>
             <PlayerAddress
+              id={id}
               name={name}
             />
           </li>
-
         ))}
       </ul>
     </>

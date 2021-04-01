@@ -25,36 +25,36 @@ describe('SearchForm', () => {
 
   it('renders input controls', () => {
     const searchFields = {
-      place: '',
+      query: '',
     };
 
     const { queryByLabelText } = renderSearchForm(searchFields);
 
-    expect(queryByLabelText('출발지점')).not.toBeNull();
+    expect(queryByLabelText('주소 입력')).not.toBeNull();
   });
 
   it('listens to the change events', () => {
     const searchFields = {
-      place: '잠실역',
+      query: '잠실역',
     };
 
     const { getByLabelText } = renderSearchForm(searchFields);
 
-    fireEvent.change(getByLabelText('출발지점'), {
+    fireEvent.change(getByLabelText('주소 입력'), {
       target: { value: '복정역' },
     });
 
-    expect(handleChange).toBeCalledWith({ name: 'place', value: '복정역' });
+    expect(handleChange).toBeCalledWith({ name: 'query', value: '복정역' });
   });
 
-  it('renders "추가" button', () => {
+  it('renders "검색" button', () => {
     const searchFields = {
-      place: '잠실역',
+      query: '잠실역',
     };
 
     const { getByText } = renderSearchForm(searchFields);
 
-    fireEvent.click(getByText('추가'));
+    fireEvent.click(getByText('검색'));
 
     expect(handleSubmit).toBeCalled();
   });

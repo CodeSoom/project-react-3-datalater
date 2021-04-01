@@ -3,22 +3,22 @@ import React from 'react';
 import TextField from './TextField';
 
 export default function SearchForm({ fields, onChange, onSubmit }) {
-  const { place } = fields;
+  const { query } = fields;
 
   return (
     <>
       <TextField
-        label="출발지점"
+        label="주소 입력"
         type="text"
-        name="place"
-        value={place}
+        name="query"
+        value={query}
         onChange={onChange}
       />
       <button
         type="button"
         onClick={onSubmit}
       >
-        추가
+        검색
       </button>
     </>
   );

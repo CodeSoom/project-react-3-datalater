@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { MemoryRouter } from 'react-router-dom';
+
 import { render } from '@testing-library/react';
 
 import PlayerAddress from './PlayerAddress';
@@ -11,9 +13,12 @@ describe('PlayerAddress', () => {
     const name = 'A';
 
     const { container } = render((
-      <PlayerAddress
-        name={name}
-      />
+      <MemoryRouter>
+        <PlayerAddress
+          id="0"
+          name={name}
+        />
+      </MemoryRouter>
     ));
 
     expect(container).toHaveTextContent(name);

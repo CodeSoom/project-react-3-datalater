@@ -18,49 +18,49 @@ describe('SearchFormContainer', () => {
 
     useSelector.mockImplementation((selector) => selector({
       searchFields: {
-        place: given.place,
+        query: given.query,
       },
     }));
   });
 
-  context('with place', () => {
-    given('place', () => '잠실역');
+  context('with query', () => {
+    given('query', () => '잠실역');
 
     it('renders input controls', () => {
       const { queryByLabelText } = render(<SearchFormContainer />);
 
-      expect(queryByLabelText('출발지점')).not.toBeNull();
+      expect(queryByLabelText('주소 입력')).not.toBeNull();
     });
 
     it('listens to change events', () => {
       const { getByLabelText } = render(<SearchFormContainer />);
 
-      fireEvent.change(getByLabelText('출발지점'), {
-        target: { name: 'place', value: '복정역' },
+      fireEvent.change(getByLabelText('주소 입력'), {
+        target: { name: 'query', value: '복정역' },
       });
 
       expect(dispatch).toBeCalledWith({
         type: 'application/changeSearchField',
-        payload: { name: 'place', value: '복정역' },
+        payload: { name: 'query', value: '복정역' },
       });
     });
 
-    it('renders "추가" button', () => {
+    it('renders "검색" button', () => {
       const { getByText } = render(<SearchFormContainer />);
 
-      fireEvent.click(getByText('추가'));
+      fireEvent.click(getByText('검색'));
 
       expect(dispatch).toBeCalled();
     });
   });
 
-  context('with empty place', () => {
-    given('place', () => '');
+  context('with empty query', () => {
+    given('query', () => '');
 
     it('does not add', () => {
       const { getByText } = render(<SearchFormContainer />);
 
-      fireEvent.click(getByText('추가'));
+      fireEvent.click(getByText('검색'));
 
       expect(dispatch).not.toBeCalled();
     });

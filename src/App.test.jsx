@@ -1,5 +1,9 @@
 import React from 'react';
 
+import {
+  MemoryRouter,
+} from 'react-router-dom';
+
 import { render } from '@testing-library/react';
 
 import { useSelector } from 'react-redux';
@@ -24,34 +28,47 @@ describe('App', () => {
 
     useSelector.mockImplementation((selector) => selector({
       searchFields: {
-        place: '',
+        query: '',
       },
       players: [],
     }));
   });
 
-  it('renders title', () => {
-    const { container } = render(<App />);
+  function renderApp({ path }) {
+    return render((
+      <MemoryRouter initialEntries={[path]}>
+        <App />
+      </MemoryRouter>
+    ));
+  }
 
-    expect(container).toHaveTextContent('Where do we meet?');
+  context('with path /', () => {
+    it('renders header', () => {
+      const { container } = renderApp({ path: '/' });
+
+      expect(container).toHaveTextContent('Where do we meet?');
+    });
+
+    it('renders search form', () => {
+      const { container } = renderApp({ path: '/' });
+
+      expect(container).toHaveTextContent('출발지점을 입력하세요');
+    });
   });
 
-  it('renders search form', () => {
-    const { container } = render(<App />);
+  context('with path /search/:id', () => {
+    it('renders search page', () => {
+      const { container } = renderApp({ path: '/search/0' });
 
-    expect(container).toHaveTextContent('출발지점을 입력하세요');
+      expect(container).toHaveTextContent('주소 입력');
+    });
   });
 
-  it('renders map', () => {
-    render(<App />);
+  context('with invalid path', () => {
+    it('renders not found page', () => {
+      const { container } = renderApp({ path: '/xxx' });
 
-    expect(setCenter).toHaveBeenCalled();
-    expect(setMap).toHaveBeenCalled();
-  });
-
-  it('renders input form', () => {
-    const { queryByLabelText } = render(<App />);
-
-    expect(queryByLabelText('출발지점')).not.toBeNull();
+      expect(container).toHaveTextContent('Not Found');
+    });
   });
 });

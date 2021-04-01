@@ -1,19 +1,17 @@
 import React from 'react';
 
-function SearchButton() {
-  return (
-    <button type="button">찾기</button>
-  );
-}
+import SearchButton from './SearchButton';
 
-export default function PlayerAddress({ name }) {
+export default function PlayerAddress({ id, name }) {
   return (
     <>
       <div>
         {name}
       </div>
       <div>
-        <SearchButton />
+        <SearchButton
+          id={id}
+        />
       </div>
     </>
   );
