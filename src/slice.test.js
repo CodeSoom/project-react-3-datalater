@@ -6,6 +6,7 @@ import reducer, {
   changeSearchField,
   requestSearch,
   setSearchResults,
+  selectPlace,
 } from './slice';
 
 const middlewares = getDefaultMiddleware();
@@ -64,5 +65,32 @@ describe('reducer', () => {
     );
 
     expect(state.searchResults).toHaveLength(1);
+  });
+
+  it('changes player\'s selected place', () => {
+    const initialState = {
+      players: [
+        { id: 0, name: 'A', selectedPlace: {} },
+      ],
+    };
+
+    const playerId = 0;
+
+    const selectedPlace = {
+      name: '잠실역',
+      address: '잠실동 347',
+      x: 126,
+      y: 37,
+    };
+
+    const state = reducer(
+      initialState,
+      selectPlace({
+        playerId,
+        selectedPlace,
+      }),
+    );
+
+    expect(state.players).toEqual([{ id: 0, name: 'A', selectedPlace }]);
   });
 });

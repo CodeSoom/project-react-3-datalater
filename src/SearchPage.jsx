@@ -1,9 +1,19 @@
 import React from 'react';
 
-import SearchFormContainer from './SearchFormContainer';
+import { useParams } from 'react-router-dom';
 
-export default function SearchPage() {
+import SearchFormContainer from './SearchFormContainer';
+import SearchResultsContainer from './SearchResultsContainer';
+
+export default function SearchPage({ params }) {
+  const { id: playerId } = params || useParams();
+
   return (
-    <SearchFormContainer />
+    <>
+      <SearchFormContainer />
+      <SearchResultsContainer
+        playerId={playerId}
+      />
+    </>
   );
 }

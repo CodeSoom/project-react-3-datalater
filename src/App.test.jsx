@@ -27,10 +27,11 @@ describe('App', () => {
     setMap.mockImplementation(() => null);
 
     useSelector.mockImplementation((selector) => selector({
+      players: [],
       searchFields: {
         query: '',
       },
-      players: [],
+      searchResults: [],
     }));
   });
 

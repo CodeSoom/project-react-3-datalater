@@ -4,12 +4,16 @@ import {
   postSearch,
 } from './services/api';
 
+import {
+  equal,
+} from './utils';
+
 const { actions, reducer } = createSlice({
   name: 'application',
   initialState: {
     players: [
-      { id: 0, name: 'A', address: '' },
-      { id: 1, name: 'B', address: '' },
+      { id: 0, name: 'A', selectedPlace: {} },
+      { id: 1, name: 'B', selectedPlace: {} },
     ],
     searchFields: {
       query: '',
@@ -35,12 +39,31 @@ const { actions, reducer } = createSlice({
         searchResults,
       };
     },
+
+    selectPlace(state, { payload: { playerId, selectedPlace } }) {
+      const { players } = state;
+
+      return {
+        ...state,
+        players: players.map((player) => {
+          if (player.id === playerId) {
+            return {
+              ...player,
+              selectedPlace,
+            };
+          }
+
+          return player;
+        }),
+      };
+    },
   },
 });
 
 export const {
   changeSearchField,
   setSearchResults,
+  selectPlace,
 } = actions;
 
 export function requestSearch() {
