@@ -43,8 +43,8 @@ describe('LobbyContainer', () => {
 
   context('with players', () => {
     const players = [
-      { id: 0, name: 'A', address: '' },
-      { id: 1, name: 'B', address: '' },
+      { id: 0, name: 'A', selectedPlace: { name: '잠실역' } },
+      { id: 1, name: 'B', selectedPlace: '' },
     ];
 
     given('players', () => players);
@@ -57,10 +57,17 @@ describe('LobbyContainer', () => {
       });
     });
 
-    it('renders "찾기" button with a link to search page', () => {
-      const { container, queryAllByText } = renderLobbyContainer();
+    it('renders "찾기" button with a link to search page for players who didn\'t select a place yet', () => {
+      const { container, queryByText } = renderLobbyContainer();
 
-      expect(queryAllByText('찾기')).not.toBeNull();
+      expect(queryByText('찾기')).not.toBeNull();
+      expect(container.innerHTML).toContain('<a href="');
+    });
+
+    it('renders button text of selected place name for players who selected a place', () => {
+      const { container, queryByText } = renderLobbyContainer();
+
+      expect(queryByText('잠실역')).not.toBeNull();
       expect(container.innerHTML).toContain('<a href="');
     });
   });

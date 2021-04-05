@@ -1,6 +1,8 @@
-export async function postSearch() {
+export async function postKeywordSearch() {
   return [];
 }
 
 // TODO: delete this
-export function xxx() {}
+export function xxx() {
+  return null;
+}

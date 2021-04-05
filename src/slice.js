@@ -1,12 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 import {
-  postSearch,
+  postKeywordSearch,
 } from './services/api';
 
-import {
-  equal,
-} from './utils';
+import { saveItem } from './services/storage';
 
 const { actions, reducer } = createSlice({
   name: 'application',
@@ -41,20 +39,24 @@ const { actions, reducer } = createSlice({
     },
 
     selectPlace(state, { payload: { playerId, selectedPlace } }) {
-      const { players } = state;
+      const { players: previousPlayers } = state;
+
+      const players = previousPlayers.map((player) => {
+        if (player.id === +playerId) {
+          return {
+            ...player,
+            selectedPlace,
+          };
+        }
+
+        return player;
+      });
+
+      saveItem('players', JSON.stringify(players));
 
       return {
         ...state,
-        players: players.map((player) => {
-          if (player.id === playerId) {
-            return {
-              ...player,
-              selectedPlace,
-            };
-          }
-
-          return player;
-        }),
+        players,
       };
     },
   },
@@ -70,7 +72,7 @@ export function requestSearch() {
   return async (dispatch, getState) => {
     const { searchFields: { query } } = getState();
 
-    const searchResults = await postSearch(query);
+    const searchResults = await postKeywordSearch(query);
 
     dispatch(setSearchResults(searchResults));
   };

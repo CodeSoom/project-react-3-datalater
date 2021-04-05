@@ -17,6 +17,7 @@ describe('PlayerAddress', () => {
         <PlayerAddress
           id="0"
           name={name}
+          place="잠실역"
         />
       </MemoryRouter>
     ));

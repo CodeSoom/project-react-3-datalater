@@ -1,6 +1,8 @@
-import { refineResults } from '../searchResultRefiner';
+import sliceResults from '../kakaoMapUtils';
 
-export async function postSearch(query) {
+const RESULT_COUNT = 5;
+
+export async function postKeywordSearch(query) {
   const url = 'https://dapi.kakao.com/v2/local/search/keyword.json'
   + `?query=${query}`;
   const response = await fetch(url, {
@@ -12,10 +14,10 @@ export async function postSearch(query) {
 
   const results = await response.json();
 
-  return refineResults(results);
+  return sliceResults(results, RESULT_COUNT);
 }
 
 // TODO: delete this
 export function xxx() {
-
+  return null;
 }

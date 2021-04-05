@@ -71,6 +71,7 @@ describe('reducer', () => {
     const initialState = {
       players: [
         { id: 0, name: 'A', selectedPlace: {} },
+        { id: 1, name: 'B', selectedPlace: {} },
       ],
     };
 
@@ -91,6 +92,9 @@ describe('reducer', () => {
       }),
     );
 
-    expect(state.players).toEqual([{ id: 0, name: 'A', selectedPlace }]);
+    expect(state.players).toEqual([
+      { id: 0, name: 'A', selectedPlace },
+      { id: 1, name: 'B', selectedPlace: {} },
+    ]);
   });
 });

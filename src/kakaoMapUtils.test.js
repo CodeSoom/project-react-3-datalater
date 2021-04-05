@@ -1,11 +1,11 @@
-import { refineResults } from './searchResultRefiner';
+import sliceResults from './kakaoMapUtils';
 
-describe('refineResults', () => {
+describe('sliceResults', () => {
   context('with empty raw results', () => {
     const rawResults = {};
 
     it('returns empty array', () => {
-      const results = refineResults(rawResults);
+      const results = sliceResults(rawResults);
 
       expect(results).toHaveLength(0);
     });
@@ -23,8 +23,10 @@ describe('refineResults', () => {
       ],
     };
 
-    it('returns array of maximum five elements', () => {
-      const results = refineResults(rawResults);
+    it('returns array with the specific number of items', () => {
+      const count = 5;
+
+      const results = sliceResults(rawResults, count);
 
       expect(results).toHaveLength(5);
     });
