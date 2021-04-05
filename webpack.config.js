@@ -1,19 +1,22 @@
+const dotenv = require('dotenv');
+
+dotenv.config();
+
 const path = require('path');
+
+const webpack = require('webpack');
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-require('dotenv').config();
-
-const apiKey = process.env.API_KEY;
-
 module.exports = {
+  mode: 'development',
   entry: path.resolve(__dirname, 'src/index.jsx'),
   plugins: [
+    new webpack.DefinePlugin({
+      'process.env.REST_API_KEY': JSON.stringify(process.env.REST_API_KEY),
+    }),
     new HtmlWebpackPlugin({
       template: 'index.html',
-      templateParameters: {
-        mapUrl: `//dapi.kakao.com/v2/maps/sdk.js?appkey=${apiKey}`,
-      },
     }),
   ],
   module: {
@@ -27,5 +30,8 @@ module.exports = {
   },
   resolve: {
     extensions: ['.js', '.jsx'],
+  },
+  devServer: {
+    historyApiFallback: true,
   },
 };

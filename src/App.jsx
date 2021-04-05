@@ -1,17 +1,52 @@
 import React from 'react';
 
-import MapContainer from './MapContainer';
+import {
+  Switch,
+  Route,
+  Link,
+} from 'react-router-dom';
+
+import { useDispatch } from 'react-redux';
+
+import LobbyPage from './LobbyPage';
+import SearchPage from './SearchPage';
+
+import { selectPlace } from './slice';
+
+import { loadItem } from './services/storage';
+
+function NotFoundPage() {
+  return (
+    <h2>Not Found</h2>
+  );
+}
 
 export default function App() {
+  const dispatch = useDispatch();
+
+  const players = loadItem('players')
+    ? JSON.parse(loadItem('players'))
+    : [];
+
+  if (players.length !== 0) {
+    players.forEach(({ id, selectedPlace }) => {
+      dispatch(selectPlace({
+        playerId: id,
+        selectedPlace,
+      }));
+    });
+  }
+
   return (
     <div>
-      <h1>Where do we meet?</h1>
-      <p>다음 지도를 통해 알아보세요.</p>
-      <ul>
-        <li><a href="https://map.kakao.com/">카카오 지도</a></li>
-        <li><a href="https://map.naver.com/">네이버 지도</a></li>
-      </ul>
-      <MapContainer />
+      <h1>
+        <Link to="/">Where do we meet?</Link>
+      </h1>
+      <Switch>
+        <Route exact path="/" component={LobbyPage} />
+        <Route path="/search/:id" component={SearchPage} />
+        <Route component={NotFoundPage} />
+      </Switch>
     </div>
   );
 }
