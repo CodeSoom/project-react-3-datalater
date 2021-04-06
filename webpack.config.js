@@ -11,6 +11,9 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
   mode: 'development',
   entry: path.resolve(__dirname, 'src/index.jsx'),
+  output: {
+    publicPath: '/',
+  },
   plugins: [
     new webpack.DefinePlugin({
       'process.env.REST_API_KEY': JSON.stringify(process.env.REST_API_KEY),
