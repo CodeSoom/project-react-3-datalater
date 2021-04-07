@@ -67,34 +67,80 @@ describe('reducer', () => {
     expect(state.searchResults).toHaveLength(1);
   });
 
-  it('changes player\'s selected place', () => {
+  context('without any address registered', () => {
     const initialState = {
       players: [
         { id: 0, name: 'A', selectedPlace: {} },
         { id: 1, name: 'B', selectedPlace: {} },
       ],
+      isEachAddressRegistered: false,
     };
 
-    const playerId = 0;
+    it('changes player\'s selected place', () => {
+      const playerId = 0;
 
-    const selectedPlace = {
-      name: '잠실역',
-      address: '잠실동 347',
-      x: 126,
-      y: 37,
+      const selectedPlace = {
+        name: '잠실역',
+        address: '잠실동 347',
+        x: 126,
+        y: 37,
+      };
+
+      const state = reducer(
+        initialState,
+        selectPlace({
+          playerId,
+          selectedPlace,
+        }),
+      );
+
+      expect(state.players).toEqual([
+        { id: 0, name: 'A', selectedPlace },
+        { id: 1, name: 'B', selectedPlace: {} },
+      ]);
+
+      expect(state.isEachAddressRegistered).toEqual(false);
+    });
+  });
+
+  context('with only one address not registered', () => {
+    const initialState = {
+      players: [
+        {
+          id: 0,
+          name: 'A',
+          selectedPlace: {
+            name: '잠실역',
+            address: '잠실동 347',
+            x: 126,
+            y: 37,
+          },
+        },
+        { id: 1, name: 'B', selectedPlace: {} },
+      ],
+      isEachAddressRegistered: false,
     };
 
-    const state = reducer(
-      initialState,
-      selectPlace({
-        playerId,
-        selectedPlace,
-      }),
-    );
+    it('changes whether each address is registered when the only one left player selects the place', () => {
+      const playerId = 1;
 
-    expect(state.players).toEqual([
-      { id: 0, name: 'A', selectedPlace },
-      { id: 1, name: 'B', selectedPlace: {} },
-    ]);
+      const selectedPlace = {
+        name: '정자역',
+        address: '정자동 6',
+        x: 126,
+        y: 37,
+      };
+
+      const state = reducer(
+        initialState,
+        selectPlace({
+          playerId,
+          selectedPlace,
+        }),
+      );
+
+      expect(state.players[1]).toEqual({ id: 1, name: 'B', selectedPlace });
+      expect(state.isEachAddressRegistered).toEqual(true);
+    });
   });
 });

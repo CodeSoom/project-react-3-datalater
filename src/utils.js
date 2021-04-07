@@ -13,3 +13,7 @@ export function isEmptyString(str) {
 export function isEmptyArray(arr) {
   return arr === 'undefined' || arr.length === 0;
 }
+
+export function isEmptyObject(obj) {
+  return Object.keys(obj).length === 0;
+}

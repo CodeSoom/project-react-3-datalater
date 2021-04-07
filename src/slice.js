@@ -6,6 +6,16 @@ import {
 
 import { saveItem } from './services/storage';
 
+import { isEmptyObject } from './utils';
+
+function hasAddress(player) {
+  return !isEmptyObject(player.selectedPlace);
+}
+
+function isEachAddressRegistered(players) {
+  return players.every(hasAddress);
+}
+
 const { actions, reducer } = createSlice({
   name: 'application',
   initialState: {
@@ -17,6 +27,7 @@ const { actions, reducer } = createSlice({
       query: '',
     },
     searchResults: [],
+    isEachAddressRegistered: false,
   },
   reducers: {
     changeSearchField(state, { payload: { name, value } }) {
@@ -57,6 +68,7 @@ const { actions, reducer } = createSlice({
       return {
         ...state,
         players,
+        isEachAddressRegistered: isEachAddressRegistered(players),
       };
     },
   },
