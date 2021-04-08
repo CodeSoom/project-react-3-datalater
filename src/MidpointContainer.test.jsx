@@ -1,7 +1,5 @@
 import React from 'react';
 
-import { MemoryRouter } from 'react-router-dom';
-
 import { render } from '@testing-library/react';
 
 import { useSelector } from 'react-redux';
@@ -12,36 +10,36 @@ jest.mock('react-redux');
 
 describe('MidpointContainer', () => {
   beforeEach(() => {
+    jest.clearAllMocks();
+
     useSelector.mockImplementation((selector) => selector({
-      isEachAddressRegistered: given.isEachAddressRegistered,
+      midpoints: given.midpoints,
     }));
   });
 
-  function renderLobbyContainer() {
-    return render((
-      <MemoryRouter>
-        <MidpointContainer />
-      </MemoryRouter>
-    ));
-  }
+  context('without midpoints', () => {
+    given('midpoints', () => []);
 
-  context('without each address registered', () => {
-    given('isEachAddressRegistered', () => false);
+    it('renders no midpoints message', () => {
+      const { container } = render(<MidpointContainer />);
 
-    it('renders not every address registered message', () => {
-      const { container } = renderLobbyContainer();
-
-      expect(container).toHaveTextContent('참여 인원의 주소가 모두 등록되지 않았습니다');
+      expect(container).toHaveTextContent('중간지점을 찾지 못했습니다');
     });
   });
 
-  context('with each address registered', () => {
-    given('isEachAddressRegistered', () => true);
+  context('with midpoints', () => {
+    const midpoints = [
+      {
+        id: 0, name: '중간1', addres: '중간1 주소', x: 126, y: 37,
+      },
+    ];
 
-    it('renders midpoint button', () => {
-      const { queryByText } = renderLobbyContainer();
+    given('midpoints', () => midpoints);
 
-      expect(queryByText('중간지점 찾기')).not.toBeNull();
+    it('renders midpoints', () => {
+      const { queryByText } = render(<MidpointContainer />);
+
+      expect(queryByText('중간1')).not.toBeNull();
     });
   });
 });

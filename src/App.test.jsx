@@ -25,8 +25,7 @@ describe('App', () => {
   const dispatch = jest.fn();
 
   beforeEach(() => {
-    setCenter.mockClear();
-    setMap.mockClear();
+    jest.clearAllMocks();
 
     setCenter.mockImplementation(() => null);
     setMap.mockImplementation(() => null);
@@ -39,6 +38,7 @@ describe('App', () => {
         query: '',
       },
       searchResults: [],
+      midpoints: [],
     }));
   });
 
@@ -69,6 +69,14 @@ describe('App', () => {
       const { container } = renderApp({ path: '/search/0' });
 
       expect(container).toHaveTextContent('주소 입력');
+    });
+  });
+
+  context('with path /result', () => {
+    it('renders result page', () => {
+      const { container } = renderApp({ path: '/result' });
+
+      expect(container).toHaveTextContent('중간지점');
     });
   });
 
@@ -118,6 +126,29 @@ describe('App', () => {
             y,
           },
         },
+      });
+    });
+  });
+
+  context('with midpoints', () => {
+    const savedMidpoints = [
+      {
+        id: 0, address: '주소', name: '이름', x: 126, y: 37,
+      },
+    ];
+
+    beforeEach(() => {
+      const midpoints = JSON.stringify(savedMidpoints);
+
+      loadItem.mockImplementation(() => midpoints);
+    });
+
+    it('calls dispatch with "setMidpoints" action', () => {
+      renderApp({ path: '/' });
+
+      expect(dispatch).toBeCalledWith({
+        type: 'application/setMidpoints',
+        payload: savedMidpoints,
       });
     });
   });

@@ -10,8 +10,12 @@ import { useDispatch } from 'react-redux';
 
 import LobbyPage from './LobbyPage';
 import SearchPage from './SearchPage';
+import ResultPage from './ResultPage';
 
-import { selectPlace } from './slice';
+import {
+  selectPlace,
+  setMidpoints,
+} from './slice';
 
 import { loadItem } from './services/storage';
 
@@ -37,6 +41,14 @@ export default function App() {
     });
   }
 
+  const midpoints = loadItem('midpoints')
+    ? JSON.parse(loadItem('midpoints'))
+    : [];
+
+  if (midpoints.length !== 0) {
+    dispatch(setMidpoints(midpoints));
+  }
+
   return (
     <div>
       <h1>
@@ -45,6 +57,7 @@ export default function App() {
       <Switch>
         <Route exact path="/" component={LobbyPage} />
         <Route path="/search/:id" component={SearchPage} />
+        <Route path="/result" component={ResultPage} />
         <Route component={NotFoundPage} />
       </Switch>
     </div>
