@@ -7,6 +7,8 @@ import reducer, {
   requestSearch,
   setSearchResults,
   selectPlace,
+  setMidpoints,
+  requestMidpoints,
 } from './slice';
 
 const middlewares = getDefaultMiddleware();
@@ -32,6 +34,39 @@ describe('actions', () => {
       const actions = store.getActions();
 
       expect(actions[0]).toEqual(setSearchResults([]));
+    });
+  });
+
+  describe('requestMidpoints', () => {
+    beforeEach(() => {
+      store = mockStore({
+        players: [
+          {
+            selectedPlace: {
+              name: '잠실역',
+              address: '잠실동 347',
+              x: 126,
+              y: 37,
+            },
+          },
+          {
+            selectedPlace: {
+              name: '정자역',
+              address: '정자동 6',
+              x: 127,
+              y: 37,
+            },
+          },
+        ],
+      });
+    });
+
+    it('dispatches setMidpoints', async () => {
+      await store.dispatch(requestMidpoints());
+
+      const actions = store.getActions();
+
+      expect(actions[0]).toEqual(setMidpoints([]));
     });
   });
 });
@@ -142,5 +177,25 @@ describe('reducer', () => {
       expect(state.players[1]).toEqual({ id: 1, name: 'B', selectedPlace });
       expect(state.isEachAddressRegistered).toEqual(true);
     });
+  });
+
+  it('changes midpoints', () => {
+    const initialState = {
+      midpoints: [],
+    };
+
+    const midpoints = [
+      {
+        id: 0,
+        name: '여의도역',
+        address: '여의도역 주소',
+        x: 126,
+        y: 37,
+      },
+    ];
+
+    const state = reducer(initialState, setMidpoints(midpoints));
+
+    expect(state.midpoints).toHaveLength(1);
   });
 });

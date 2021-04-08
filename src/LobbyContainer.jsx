@@ -1,13 +1,33 @@
 import React from 'react';
 
-import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+
+import { useDispatch, useSelector } from 'react-redux';
 
 import PlayerAddress from './PlayerAddress';
+import MidpointButton from './MidpointButton';
 
-import { get, isEmptyArray } from './utils';
+import {
+  requestMidpoints,
+} from './slice';
+
+import {
+  get,
+  isEmptyArray,
+} from './utils';
 
 export default function LobbyContainer() {
+  const history = useHistory();
+
+  const dispatch = useDispatch();
+
   const players = useSelector(get('players'));
+  const isEachAddressRegistered = useSelector(get('isEachAddressRegistered'));
+
+  function handleClick() {
+    dispatch(requestMidpoints());
+    history.push('/result');
+  }
 
   if (isEmptyArray(players)) {
     return (
@@ -32,6 +52,10 @@ export default function LobbyContainer() {
           </li>
         ))}
       </ul>
+      <MidpointButton
+        isEachAddressRegistered={isEachAddressRegistered}
+        onClick={handleClick}
+      />
     </>
   );
 }

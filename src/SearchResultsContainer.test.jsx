@@ -39,8 +39,8 @@ describe('SearchResultsContainer', () => {
     given('searchResults', () => [
       {
         id: 0,
-        place_name: name,
-        address_name: address,
+        name,
+        address,
         x,
         y,
       },

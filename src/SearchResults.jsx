@@ -28,7 +28,7 @@ export default function SearchResults({ searchResults, onClick }) {
         : (
           <ul>
             { searchResults.map(({
-              id, x, y, place_name: name, address_name: address,
+              id, x, y, name, address,
             }) => (
               <PlaceItem
                 key={id}

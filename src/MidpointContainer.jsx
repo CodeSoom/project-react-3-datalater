@@ -1,21 +1,31 @@
 import React from 'react';
-
 import { useSelector } from 'react-redux';
-
-import MidpointButton from './MidpointButton';
-
-import { get } from './utils';
+import { get, isEmptyArray } from './utils';
 
 export default function MidpointContainer() {
-  const isEachAddressRegistered = useSelector(get('isEachAddressRegistered'));
+  const midpoints = useSelector(get('midpoints'));
 
-  if (!isEachAddressRegistered) {
+  if (isEmptyArray(midpoints)) {
     return (
-      <p>참여 인원의 주소가 모두 등록되지 않았습니다</p>
+      <p>중간지점을 찾지 못했습니다.</p>
     );
   }
 
   return (
-    <MidpointButton />
+    <>
+      <h2>추천 장소</h2>
+      <ul>
+        { midpoints.map(({ id, name, address }) => (
+          <li key={id}>
+            <div>
+              {name}
+            </div>
+            <div>
+              {address}
+            </div>
+          </li>
+        )) }
+      </ul>
+    </>
   );
 }

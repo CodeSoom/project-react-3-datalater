@@ -2,18 +2,34 @@ import React from 'react';
 
 import { MemoryRouter } from 'react-router-dom';
 
-import { render } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import LobbyContainer from './LobbyContainer';
 
 jest.mock('react-redux');
 
+const mockPush = jest.fn();
+
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useHistory() {
+    return { push: mockPush };
+  },
+}));
+
 describe('LobbyContainer', () => {
+  const dispatch = jest.fn();
+
   beforeEach(() => {
+    jest.clearAllMocks();
+
+    useDispatch.mockImplementation(() => dispatch);
+
     useSelector.mockImplementation((selector) => selector({
       players: given.players,
+      isEachAddressRegistered: given.isEachAddressRegistered,
     }));
   });
 
@@ -69,6 +85,31 @@ describe('LobbyContainer', () => {
 
       expect(queryByText('잠실역')).not.toBeNull();
       expect(container.innerHTML).toContain('<a href="');
+    });
+
+    context('without each address registered', () => {
+      given('isEachAddressRegistered', () => false);
+
+      it('renders not every address registered message', () => {
+        const { container } = renderLobbyContainer();
+
+        expect(container).toHaveTextContent('참여 인원의 주소가 모두 등록되지 않았습니다');
+      });
+    });
+
+    context('with each address registered', () => {
+      given('isEachAddressRegistered', () => true);
+
+      it('renders midpoint button', () => {
+        const { queryByText, getByText } = renderLobbyContainer();
+
+        expect(queryByText('중간지점 찾기')).not.toBeNull();
+
+        fireEvent.click(getByText('중간지점 찾기'));
+
+        expect(dispatch).toBeCalled();
+        expect(mockPush).toBeCalledWith('/result');
+      });
     });
   });
 });

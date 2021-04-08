@@ -1,7 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { getMidCoords } from './kakaoMapUtils';
 
 import {
   postKeywordSearch,
+  postCategorySearch,
 } from './services/api';
 
 import { saveItem } from './services/storage';
@@ -28,6 +30,7 @@ const { actions, reducer } = createSlice({
     },
     searchResults: [],
     isEachAddressRegistered: false,
+    midpoints: [],
   },
   reducers: {
     changeSearchField(state, { payload: { name, value } }) {
@@ -71,6 +74,13 @@ const { actions, reducer } = createSlice({
         isEachAddressRegistered: isEachAddressRegistered(players),
       };
     },
+
+    setMidpoints(state, { payload: midpoints }) {
+      return {
+        ...state,
+        midpoints,
+      };
+    },
   },
 });
 
@@ -78,6 +88,7 @@ export const {
   changeSearchField,
   setSearchResults,
   selectPlace,
+  setMidpoints,
 } = actions;
 
 export function requestSearch() {
@@ -87,6 +98,22 @@ export function requestSearch() {
     const searchResults = await postKeywordSearch(query);
 
     dispatch(setSearchResults(searchResults));
+  };
+}
+
+export function requestMidpoints() {
+  return async (dispatch, getState) => {
+    const { players } = getState();
+
+    const places = players.map(({ selectedPlace }) => selectedPlace);
+
+    const midCoords = getMidCoords(places);
+
+    const midpoints = await postCategorySearch(midCoords);
+
+    saveItem('midpoints', JSON.stringify(midpoints));
+
+    dispatch(setMidpoints(midpoints));
   };
 }
 

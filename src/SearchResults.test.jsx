@@ -15,7 +15,7 @@ describe('SearchResults', () => {
 
   context('with results', () => {
     const searchResults = [
-      { id: 0, place_name: '잠실역 1번 출구', address_name: '잠실동 347' },
+      { id: 0, name: '잠실역 1번 출구', address: '잠실동 347' },
     ];
 
     it('renders search results', () => {

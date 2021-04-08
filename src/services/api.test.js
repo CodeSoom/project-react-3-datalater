@@ -1,6 +1,6 @@
 import {
   postKeywordSearch,
-  xxx,
+  postCategorySearch,
 } from './api';
 
 import SEARCH_RESULTS from '../../fixtures/search-results';
@@ -24,12 +24,15 @@ describe('api', () => {
     });
   });
 
-  // TODO: delete this
-  describe('not yet written function', () => {
-    it('returns null', () => {
-      const results = xxx();
+  describe('postCategorySearch', () => {
+    beforeEach(() => {
+      mockFetch({ documents: [] });
+    });
 
-      expect(results).toBeNull();
+    it('returns search results', async () => {
+      const results = await postCategorySearch({ x: 127, y: 36 });
+
+      expect(results).toEqual(SEARCH_RESULTS);
     });
   });
 });
