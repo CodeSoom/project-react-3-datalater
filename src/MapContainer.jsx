@@ -1,20 +1,20 @@
 import React, { useEffect } from 'react';
 
 import {
-  setCenter,
-  setMap,
+  loadMap,
 } from './services/map';
 
 export default function MapContainer() {
   useEffect(() => {
-    const container = document.getElementById('map');
+    const script = document.createElement('script');
+    script.src = '//dapi.kakao.com/v2/maps/sdk.js'
+    + '?autoload=false'
+    + `&appkey=${process.env.JS_API_KEY}`
+    + '&libraries=services,clusterer,drawing';
 
-    const options = {
-      center: setCenter(33.450701, 126.570667),
-      level: 3,
-    };
+    document.body.appendChild(script);
 
-    setMap(container, options);
+    script.onload = () => loadMap();
   }, []);
 
   return (

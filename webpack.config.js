@@ -16,6 +16,7 @@ module.exports = {
   },
   plugins: [
     new webpack.DefinePlugin({
+      'process.env.JS_API_KEY': JSON.stringify(process.env.JS_API_KEY),
       'process.env.REST_API_KEY': JSON.stringify(process.env.REST_API_KEY),
     }),
     new HtmlWebpackPlugin({

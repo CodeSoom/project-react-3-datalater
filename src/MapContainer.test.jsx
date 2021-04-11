@@ -6,24 +6,37 @@ import MapContainer from './MapContainer';
 
 import {
   setCenter,
-  setMap,
+  loadMap,
+  createMap,
 } from './services/map';
 
 jest.mock('./services/map');
 
 describe('MapContainer', () => {
-  beforeEach(() => {
-    setCenter.mockClear();
-    setMap.mockClear();
+  const loadMapCallback = () => {
+    setCenter();
+    createMap();
+  };
 
+  beforeEach(() => {
+    loadMap.mockClear();
+    setCenter.mockClear();
+    createMap.mockClear();
+
+    loadMap.mockImplementation(() => loadMapCallback());
     setCenter.mockImplementation(() => null);
-    setMap.mockImplementation(() => null);
+    createMap.mockImplementation(() => null);
   });
 
   it('renders map', () => {
     render(<MapContainer />);
 
+    const script = document.querySelector('script');
+
+    script.onload();
+
+    expect(loadMap).toHaveBeenCalled();
     expect(setCenter).toHaveBeenCalled();
-    expect(setMap).toHaveBeenCalled();
+    expect(createMap).toHaveBeenCalled();
   });
 });

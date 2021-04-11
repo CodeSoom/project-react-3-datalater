@@ -11,8 +11,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import App from './App';
 
 import {
-  setCenter,
-  setMap,
+  loadMap,
 } from './services/map';
 
 import { loadItem } from './services/storage';
@@ -27,8 +26,7 @@ describe('App', () => {
   beforeEach(() => {
     jest.clearAllMocks();
 
-    setCenter.mockImplementation(() => null);
-    setMap.mockImplementation(() => null);
+    loadMap.mockImplementation(() => null);
 
     useDispatch.mockImplementation(() => dispatch);
 
