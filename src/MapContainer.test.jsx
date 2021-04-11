@@ -2,30 +2,39 @@ import React from 'react';
 
 import { render } from '@testing-library/react';
 
+import { useSelector } from 'react-redux';
+
 import MapContainer from './MapContainer';
 
 import {
-  setCenter,
+  getPosition,
   loadMap,
   createMap,
 } from './services/map';
 
+jest.mock('react-redux');
 jest.mock('./services/map');
 
 describe('MapContainer', () => {
   const loadMapCallback = () => {
-    setCenter();
+    getPosition();
     createMap();
   };
 
   beforeEach(() => {
     loadMap.mockClear();
-    setCenter.mockClear();
+    getPosition.mockClear();
     createMap.mockClear();
 
     loadMap.mockImplementation(() => loadMapCallback());
-    setCenter.mockImplementation(() => null);
+    getPosition.mockImplementation(() => null);
     createMap.mockImplementation(() => null);
+
+    useSelector.mockImplementation((selector) => selector({
+      players: [
+        { id: 0, name: 'A', selectedPlace: { name: 'place', x: 127, y: 37 } },
+      ],
+    }));
   });
 
   it('renders map', () => {
@@ -36,7 +45,7 @@ describe('MapContainer', () => {
     script.onload();
 
     expect(loadMap).toHaveBeenCalled();
-    expect(setCenter).toHaveBeenCalled();
+    expect(getPosition).toHaveBeenCalled();
     expect(createMap).toHaveBeenCalled();
   });
 });

@@ -20,6 +20,9 @@ describe('ResultPage', () => {
 
     useSelector.mockImplementation((selector) => selector({
       midpoints: given.midpoints,
+      players: [
+        { id: 0, name: 'A', selectedPlace: { name: 'place', x: 127, y: 37 } },
+      ],
     }));
 
     loadMap.mockImplementation(() => null);
@@ -53,8 +56,6 @@ describe('ResultPage', () => {
       script.onload();
 
       expect(loadMap).toHaveBeenCalled();
-
-      // TODO: test markers
     });
   });
 });
