@@ -1,7 +1,9 @@
 const setCenter = jest.fn();
-const setMap = jest.fn();
+const createMap = jest.fn();
+const loadMap = jest.fn();
 
 export {
   setCenter,
-  setMap,
+  createMap,
+  loadMap,
 };
