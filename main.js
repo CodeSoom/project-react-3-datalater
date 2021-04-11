@@ -97,6 +97,17 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 
 /***/ }),
 
+/***/ "./src/MapContainer.jsx":
+/*!******************************!*\
+  !*** ./src/MapContainer.jsx ***!
+  \******************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (/* binding */ MapContainer)\n/* harmony export */ });\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ \"./node_modules/react/index.js\");\n/* harmony import */ var _services_map__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./services/map */ \"./src/services/map.js\");\n\n\nfunction MapContainer() {\n  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {\n    const script = document.createElement('script');\n    script.src = '//dapi.kakao.com/v2/maps/sdk.js' + '?autoload=false' + `&appkey=${\"4db7f31e27d6aa55e118e6f646d8e60e\"}` + '&libraries=services,clusterer,drawing';\n    document.body.appendChild(script);\n\n    script.onload = () => (0,_services_map__WEBPACK_IMPORTED_MODULE_1__.loadMap)();\n  }, []);\n  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(\"div\", {\n    id: \"map\",\n    style: {\n      width: 500,\n      height: 400\n    }\n  }));\n}\n\n//# sourceURL=webpack://wheredowemeet/./src/MapContainer.jsx?");
+
+/***/ }),
+
 /***/ "./src/MidpointButton.jsx":
 /*!********************************!*\
   !*** ./src/MidpointButton.jsx ***!
@@ -137,7 +148,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (/* binding */ ResultPage)\n/* harmony export */ });\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ \"./node_modules/react/index.js\");\n/* harmony import */ var _MidpointContainer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./MidpointContainer */ \"./src/MidpointContainer.jsx\");\n\n\nfunction ResultPage() {\n  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_MidpointContainer__WEBPACK_IMPORTED_MODULE_1__.default, null);\n}\n\n//# sourceURL=webpack://wheredowemeet/./src/ResultPage.jsx?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (/* binding */ ResultPage)\n/* harmony export */ });\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ \"./node_modules/react/index.js\");\n/* harmony import */ var _MapContainer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./MapContainer */ \"./src/MapContainer.jsx\");\n/* harmony import */ var _MidpointContainer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./MidpointContainer */ \"./src/MidpointContainer.jsx\");\n\n\n\nfunction ResultPage() {\n  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_MapContainer__WEBPACK_IMPORTED_MODULE_1__.default, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_MidpointContainer__WEBPACK_IMPORTED_MODULE_2__.default, null));\n}\n\n//# sourceURL=webpack://wheredowemeet/./src/ResultPage.jsx?");
 
 /***/ }),
 
@@ -248,6 +259,17 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 
 "use strict";
 eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"postKeywordSearch\": () => (/* binding */ postKeywordSearch),\n/* harmony export */   \"postCategorySearch\": () => (/* binding */ postCategorySearch)\n/* harmony export */ });\n/* harmony import */ var _kakaoMapUtils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../kakaoMapUtils */ \"./src/kakaoMapUtils.js\");\n\nconst RESULT_COUNT = 5;\nconst SUBWAY_CODE = 'SW8';\nconst RADIUS_METER = '20000';\nasync function postKeywordSearch(query) {\n  const url = 'https://dapi.kakao.com/v2/local/search/keyword.json' + `?query=${query}`;\n  const response = await fetch(url, {\n    method: 'GET',\n    headers: {\n      Authorization: `KakaoAK ${\"c5e939eae530de7f27f20ab7b95f9417\"}`\n    }\n  });\n  const results = await response.json();\n  return (0,_kakaoMapUtils__WEBPACK_IMPORTED_MODULE_0__.sliceResults)(results, RESULT_COUNT).map((0,_kakaoMapUtils__WEBPACK_IMPORTED_MODULE_0__.addKeyByCopy)('place_name', 'name')).map((0,_kakaoMapUtils__WEBPACK_IMPORTED_MODULE_0__.addKeyByCopy)('address_name', 'address'));\n}\nasync function postCategorySearch({\n  x,\n  y\n}) {\n  const url = 'https://dapi.kakao.com/v2/local/search/category.json' + `?category_group_code=${SUBWAY_CODE}` + `&radius=${RADIUS_METER}` + `&x=${x}` + `&y=${y}`;\n  const response = await fetch(url, {\n    method: 'GET',\n    headers: {\n      Authorization: `KakaoAK ${\"c5e939eae530de7f27f20ab7b95f9417\"}`\n    }\n  });\n  const results = await response.json();\n  return (0,_kakaoMapUtils__WEBPACK_IMPORTED_MODULE_0__.sliceResults)(results, RESULT_COUNT).map((0,_kakaoMapUtils__WEBPACK_IMPORTED_MODULE_0__.addKeyByCopy)('place_name', 'name')).map((0,_kakaoMapUtils__WEBPACK_IMPORTED_MODULE_0__.addKeyByCopy)('address_name', 'address'));\n}\n\n//# sourceURL=webpack://wheredowemeet/./src/services/api.js?");
+
+/***/ }),
+
+/***/ "./src/services/map.js":
+/*!*****************************!*\
+  !*** ./src/services/map.js ***!
+  \*****************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"setCenter\": () => (/* binding */ setCenter),\n/* harmony export */   \"createMap\": () => (/* binding */ createMap),\n/* harmony export */   \"loadMap\": () => (/* binding */ loadMap)\n/* harmony export */ });\nfunction setCenter(latitude, longitude) {\n  return new window.kakao.maps.LatLng(latitude, longitude);\n}\nfunction createMap(container, options) {\n  return new window.kakao.maps.Map(container, options);\n}\nfunction loadMap() {\n  return window.kakao.maps.load(() => {\n    const container = document.getElementById('map');\n    const options = {\n      center: setCenter(33.450701, 126.570667),\n      level: 3\n    };\n    createMap(container, options);\n  });\n}\n\n//# sourceURL=webpack://wheredowemeet/./src/services/map.js?");
 
 /***/ }),
 
