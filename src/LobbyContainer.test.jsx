@@ -74,17 +74,19 @@ describe('LobbyContainer', () => {
     });
 
     it('renders "찾기" button with a link to search page for players who didn\'t select a place yet', () => {
-      const { container, queryByText } = renderLobbyContainer();
+      const { queryByText, getByText } = renderLobbyContainer();
 
       expect(queryByText('찾기')).not.toBeNull();
-      expect(container.innerHTML).toContain('<a href="');
+
+      fireEvent.click(getByText('찾기'));
+
+      expect(mockPush).toBeCalledWith('/search/1');
     });
 
     it('renders button text of selected place name for players who selected a place', () => {
-      const { container, queryByText } = renderLobbyContainer();
+      const { queryByText } = renderLobbyContainer();
 
       expect(queryByText('잠실역')).not.toBeNull();
-      expect(container.innerHTML).toContain('<a href="');
     });
 
     context('without each address registered', () => {

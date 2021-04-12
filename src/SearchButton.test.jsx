@@ -2,39 +2,47 @@ import React from 'react';
 
 import { MemoryRouter } from 'react-router-dom';
 
-import { render } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 
 import SearchButton from './SearchButton';
 
 describe('SearchButton', () => {
+  const handleClickSearchButton = jest.fn();
+
+  beforeEach(() => {
+    handleClickSearchButton.mockClear();
+  });
+
   context('without selected place', () => {
     it('renders "찾기" button with a link to search page', () => {
-      const { queryByText, container } = render((
+      const { getByText } = render((
         <MemoryRouter>
           <SearchButton
-            id="0"
+            onClickSearchButton={handleClickSearchButton}
           />
         </MemoryRouter>
       ));
 
-      expect(queryByText('찾기')).not.toBeNull();
-      expect(container.innerHTML).toContain('<a href="');
+      fireEvent.click(getByText('찾기'));
+
+      expect(handleClickSearchButton).toBeCalled();
     });
   });
 
   context('with selected place', () => {
     it('renders button text of selected place name', () => {
-      const { queryByText, container } = render((
+      const { getByText } = render((
         <MemoryRouter>
           <SearchButton
-            id="0"
+            onClickSearchButton={handleClickSearchButton}
             text="잠실역"
           />
         </MemoryRouter>
       ));
 
-      expect(queryByText('잠실역')).not.toBeNull();
-      expect(container.innerHTML).toContain('<a href="');
+      fireEvent.click(getByText('잠실역'));
+
+      expect(handleClickSearchButton).toBeCalled();
     });
   });
 });
