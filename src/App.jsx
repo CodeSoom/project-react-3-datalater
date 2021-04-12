@@ -11,6 +11,7 @@ import { useDispatch } from 'react-redux';
 import LobbyPage from './LobbyPage';
 import SearchPage from './SearchPage';
 import ResultPage from './ResultPage';
+import NotFoundPage from './NotFoundPage';
 
 import {
   selectPlace,
@@ -18,12 +19,6 @@ import {
 } from './slice';
 
 import { loadItem } from './services/storage';
-
-function NotFoundPage() {
-  return (
-    <h2>Not Found</h2>
-  );
-}
 
 export default function App() {
   const dispatch = useDispatch();
