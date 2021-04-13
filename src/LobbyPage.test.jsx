@@ -2,11 +2,20 @@ import React from 'react';
 
 import { MemoryRouter } from 'react-router-dom';
 
-import { render } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 
 import { useSelector } from 'react-redux';
 
 import LobbyPage from './LobbyPage';
+
+const mockPush = jest.fn();
+
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useHistory() {
+    return { push: mockPush };
+  },
+}));
 
 jest.mock('react-redux');
 
@@ -52,10 +61,13 @@ describe('LobbyPage', () => {
     });
 
     it('renders "찾기" button', () => {
-      const { container, queryByText } = renderLobbyPage();
+      const { queryByText, getAllByText } = renderLobbyPage();
 
       expect(queryByText('찾기')).not.toBeNull();
-      expect(container.innerHTML).toContain('<a href="');
+
+      fireEvent.click(getAllByText('찾기')[0]);
+
+      expect(mockPush).toBeCalledWith('/search/0');
     });
 
     context('without each address registered', () => {

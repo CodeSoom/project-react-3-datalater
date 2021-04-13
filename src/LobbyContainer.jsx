@@ -4,6 +4,8 @@ import { useHistory } from 'react-router-dom';
 
 import { useDispatch, useSelector } from 'react-redux';
 
+import styled from '@emotion/styled';
+
 import PlayerAddress from './PlayerAddress';
 import MidpointButton from './MidpointButton';
 
@@ -29,6 +31,11 @@ export default function LobbyContainer() {
     history.push('/result');
   }
 
+  function handleClickSearchButton(id) {
+    const url = `/search/${id}`;
+    history.push(url);
+  }
+
   if (isEmptyArray(players)) {
     return (
       <>
@@ -38,24 +45,53 @@ export default function LobbyContainer() {
     );
   }
 
+  const Container = styled.div({
+    margin: '0 20px',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    height: '100%',
+  });
+
+  const SearchContainer = styled.div();
+
+  const Header = styled.header({
+    margin: '40px 0',
+    fontSize: '1.5em',
+    fontWeight: 'bold',
+  });
+
+  const List = styled.ul({
+    listStyle: 'none',
+  });
+
+  const ButtonContainer = styled.div({
+    marginBottom: '40px',
+  });
+
   return (
-    <>
-      <h2>출발지점을 입력하세요.</h2>
-      <ul>
-        {players.map(({ id, name, selectedPlace: { name: place } }) => (
-          <li key={id}>
-            <PlayerAddress
-              id={id}
-              name={name}
-              place={place}
-            />
-          </li>
-        ))}
-      </ul>
-      <MidpointButton
-        isEachAddressRegistered={isEachAddressRegistered}
-        onClick={handleClick}
-      />
-    </>
+    <Container>
+      <SearchContainer>
+        <Header>출발지점을 입력하세요.</Header>
+        <List>
+          {players.map(({ id, name, selectedPlace: { name: place } }) => (
+            <li key={id}>
+              <PlayerAddress
+                id={id}
+                name={name}
+                place={place}
+                onClickSearchButton={handleClickSearchButton}
+              />
+            </li>
+          ))}
+        </List>
+      </SearchContainer>
+      <ButtonContainer>
+        <MidpointButton
+          isEachAddressRegistered={isEachAddressRegistered}
+          onClick={handleClick}
+        />
+      </ButtonContainer>
+    </Container>
   );
 }

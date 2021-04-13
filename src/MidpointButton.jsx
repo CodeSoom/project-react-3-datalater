@@ -1,23 +1,41 @@
 import React from 'react';
 
-export default function MidpointButton({ isEachAddressRegistered, onClick }) {
-  if (isEachAddressRegistered) {
-    return (
-      <button
-        type="button"
-        onClick={onClick}
-      >
-        중간지점 찾기
-      </button>
-    );
-  }
+import styled from '@emotion/styled';
 
+import { colors } from './designSystem';
+
+const Button = styled.button(({ isEachAddressRegistered }) => ({
+  fontSize: '1.2em',
+  width: '100%',
+  padding: '1em',
+  cursor: 'pointer',
+  border: `1px solid ${colors.gray}`,
+  borderRadius: '2rem',
+  background: isEachAddressRegistered
+    ? `linear-gradient(${colors.darkBlue}, ${colors.lightBlue})`
+    : 'default',
+  color: isEachAddressRegistered ? colors.white : 'default',
+
+  '&:hover': {
+    opacity: 0.95,
+  },
+
+  '&:active': {
+    opacity: 1,
+  },
+}));
+
+export default function MidpointButton({ isEachAddressRegistered, onClick }) {
   return (
-    <button
+    <Button
       type="button"
-      disabled
+      onClick={onClick}
+      disabled={!isEachAddressRegistered}
+      isEachAddressRegistered={isEachAddressRegistered}
     >
-      참여 인원의 주소가 모두 등록되지 않았습니다
-    </button>
+      {isEachAddressRegistered
+        ? '중간지점 찾기'
+        : '참여 인원의 주소가 모두 등록되지 않았습니다'}
+    </Button>
   );
 }
