@@ -1,5 +1,9 @@
 import React from 'react';
 
+import styled from '@emotion/styled';
+
+import { colors } from './designSystem';
+
 function PlaceItem({
   name, address, x, y, onClick,
 }) {
@@ -9,24 +13,52 @@ function PlaceItem({
     });
   }
 
+  const Item = styled.li({
+    borderBottom: `1px solid ${colors.gray}`,
+    padding: '1em',
+
+    '$:hover': {
+      cursor: 'pointer',
+    },
+
+    '& a': {
+      textDecoration: 'none',
+      color: colors.black,
+    },
+  });
+
   return (
-    <li>
+    <Item>
       <a href="/" onClick={handleClick}>
         <div>{name}</div>
         <div>{address}</div>
       </a>
-    </li>
+    </Item>
   );
 }
 
 export default function SearchResults({ searchResults, onClick }) {
+  const Header = styled.header({
+    margin: '40px 0',
+    fontSize: '1.5em',
+    fontWeight: 'bold',
+  });
+
+  const NoResultMessage = styled.p({
+    textAlign: 'center',
+  });
+
+  const List = styled.ul({
+    listStyle: 'none',
+  });
+
   return (
     <>
-      <h2>검색결과</h2>
+      <Header>검색결과</Header>
       { searchResults.length === 0
-        ? <p>검색결과가 없습니다.</p>
+        ? <NoResultMessage>검색결과가 없습니다.</NoResultMessage>
         : (
-          <ul>
+          <List>
             { searchResults.map(({
               id, x, y, name, address,
             }) => (
@@ -39,7 +71,7 @@ export default function SearchResults({ searchResults, onClick }) {
                 onClick={onClick}
               />
             ))}
-          </ul>
+          </List>
         )}
     </>
   );

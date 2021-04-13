@@ -6,20 +6,15 @@ export default function SearchForm({ fields, onChange, onSubmit }) {
   const { query } = fields;
 
   return (
-    <>
+    <form onSubmit={onSubmit}>
       <TextField
         label="주소 입력"
         type="text"
         name="query"
         value={query}
         onChange={onChange}
+        onSubmit={onSubmit}
       />
-      <button
-        type="button"
-        onClick={onSubmit}
-      >
-        검색
-      </button>
-    </>
+    </form>
   );
 }

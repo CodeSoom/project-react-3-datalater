@@ -17,7 +17,6 @@ import {
 export default function SearchFormContainer() {
   const dispatch = useDispatch();
 
-  const places = useSelector(get('places'));
   const searchFields = useSelector(get('searchFields'));
   const { query } = searchFields;
 
@@ -25,7 +24,9 @@ export default function SearchFormContainer() {
     dispatch(changeSearchField({ name, value }));
   }
 
-  function handleSubmit() {
+  function handleSubmit(event) {
+    event.preventDefault();
+
     if (isEmptyString(query)) {
       return;
     }
@@ -40,9 +41,6 @@ export default function SearchFormContainer() {
         onChange={handleChange}
         onSubmit={handleSubmit}
       />
-      <p>
-        { JSON.stringify(places)}
-      </p>
     </div>
   );
 }
