@@ -15,3 +15,8 @@ export const colors = {
   secondary: '#0070c9',
   footerBackground: '#302F2F',
 };
+
+export const size = {
+  mapWidth: '100%',
+  mapHeight: '55%',
+};
