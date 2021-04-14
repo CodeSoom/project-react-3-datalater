@@ -16,6 +16,7 @@ function PlaceItem({
   const Item = styled.li({
     borderBottom: `1px solid ${colors.gray}`,
     padding: '1em',
+    fontSize: '1.2em',
 
     '$:hover': {
       cursor: 'pointer',
@@ -46,6 +47,7 @@ export default function SearchResults({ searchResults, onClick }) {
 
   const NoResultMessage = styled.p({
     textAlign: 'center',
+    fontSize: '1.2em',
   });
 
   const List = styled.ul({

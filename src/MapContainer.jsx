@@ -1,6 +1,11 @@
 import React, { useEffect } from 'react';
 
 import { useSelector } from 'react-redux';
+
+import styled from '@emotion/styled';
+
+import { colors, size } from './designSystem';
+
 import { loadMap } from './services/map';
 
 import { get } from './utils';
@@ -25,9 +30,25 @@ export default function MapContainer() {
     };
   }, [players, midpoints]);
 
+  const Map = styled.div({
+    width: size.mapWidth,
+    height: size.mapHeight,
+
+    '& #selectedplace': {
+      position: 'relative',
+      top: '5px',
+      left: '8px',
+      width: '7em',
+      textAlign: 'center',
+      whiteSpace: 'pre-wrap',
+      wordBreak: 'keep-all',
+      fontSize: '0.7em',
+      fontWeight: 'bold',
+      color: colors.black,
+    },
+  });
+
   return (
-    <>
-      <div id="map" style={{ width: '100%', height: 400 }} />
-    </>
+    <Map id="map" />
   );
 }

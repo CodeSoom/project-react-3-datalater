@@ -17,15 +17,15 @@ const Label = styled.label({
 });
 
 const Input = styled.input({
-  flex: 3,
-  fontSize: '1em',
+  flex: 4,
+  fontSize: '1.2em',
   padding: '0.3em',
   marginRight: '10px',
 });
 
 const Button = styled.button({
   flex: 1,
-  fontSize: '1em',
+  fontSize: '1.2em',
   width: '100%',
   padding: '0.3em',
   cursor: 'pointer',

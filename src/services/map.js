@@ -34,20 +34,20 @@ export function loadMap({ selectedPlaces, midpoints }) {
     const bounds = new window.kakao.maps.LatLngBounds();
 
     selectedPlaces.forEach(({ name, x, y }) => {
-      const position = getPosition(y, x);
+      const position = getPosition(+y, +x);
 
-      const marker = createMarker({
+      createMarker({
         map,
         position,
         title: name,
       });
 
-      const infowindow = new window.kakao.maps.InfoWindow({
-        position,
-        content: name,
+      const customOverlay = new window.kakao.maps.CustomOverlay({
+        position: getPosition(+y - 0.001, +x),
+        content: `<div id="selectedplace">${name}</div>`,
       });
 
-      infowindow.open(map, marker);
+      customOverlay.setMap(map);
 
       bounds.extend(position);
     });
@@ -57,7 +57,7 @@ export function loadMap({ selectedPlaces, midpoints }) {
     const markerImage = new window.kakao.maps.MarkerImage(imageSrc, imageSize);
 
     midpoints.forEach(({ name, x, y }) => {
-      const position = new window.kakao.maps.LatLng(y, x);
+      const position = new window.kakao.maps.LatLng(+y, +x);
 
       createMarker({
         map,
