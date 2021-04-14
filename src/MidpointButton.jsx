@@ -25,7 +25,7 @@ const Button = styled.button(({ isEachAddressRegistered }) => ({
   },
 }));
 
-export default function MidpointButton({ isEachAddressRegistered, onClick }) {
+function MidpointButton({ isEachAddressRegistered, onClick }) {
   return (
     <Button
       type="button"
@@ -39,3 +39,5 @@ export default function MidpointButton({ isEachAddressRegistered, onClick }) {
     </Button>
   );
 }
+
+export default React.memo(MidpointButton);

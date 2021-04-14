@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -20,11 +20,11 @@ export default function SearchFormContainer() {
   const searchFields = useSelector(get('searchFields'));
   const { query } = searchFields;
 
-  function handleChange({ name, value }) {
+  const handleChange = useCallback(({ name, value }) => {
     dispatch(changeSearchField({ name, value }));
-  }
+  }, [dispatch]);
 
-  function handleSubmit(event) {
+  const handleSubmit = useCallback((event) => {
     event.preventDefault();
 
     if (isEmptyString(query)) {
@@ -32,7 +32,7 @@ export default function SearchFormContainer() {
     }
 
     dispatch(requestSearch());
-  }
+  }, [dispatch]);
 
   return (
     <div>

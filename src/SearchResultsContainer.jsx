@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -15,9 +15,9 @@ export default function SearchResultsContainer({ playerId }) {
 
   const searchResults = useSelector(get('searchResults'));
 
-  function handleClick(selectedPlace) {
+  const handleClick = useCallback((selectedPlace) => {
     dispatch(selectPlace({ playerId, selectedPlace }));
-  }
+  }, [dispatch]);
 
   return (
     <SearchResults

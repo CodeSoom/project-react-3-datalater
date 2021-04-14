@@ -20,7 +20,7 @@ const ButtonContainer = styled.div({
   flex: 3,
 });
 
-export default function PlayerAddress({
+function PlayerAddress({
   id, name, place, onClickSearchButton,
 }) {
   function handleClickSearchButton() {
@@ -42,3 +42,5 @@ export default function PlayerAddress({
     </Container>
   );
 }
+
+export default React.memo(PlayerAddress);
