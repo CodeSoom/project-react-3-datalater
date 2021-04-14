@@ -2,43 +2,9 @@ import React from 'react';
 
 import styled from '@emotion/styled';
 
-import { colors } from './designSystem';
+import PlaceItem from './PlaceItem';
 
-function PlaceItem({
-  name, address, x, y, onClick,
-}) {
-  function handleClick() {
-    onClick({
-      name, address, x, y,
-    });
-  }
-
-  const Item = styled.li({
-    borderBottom: `1px solid ${colors.gray}`,
-    padding: '1em',
-    fontSize: '1.2em',
-
-    '$:hover': {
-      cursor: 'pointer',
-    },
-
-    '& a': {
-      textDecoration: 'none',
-      color: colors.black,
-    },
-  });
-
-  return (
-    <Item>
-      <a href="/" onClick={handleClick}>
-        <div>{name}</div>
-        <div>{address}</div>
-      </a>
-    </Item>
-  );
-}
-
-export default function SearchResults({ searchResults, onClick }) {
+function SearchResults({ searchResults, onClick }) {
   const Header = styled.header({
     margin: '40px 0',
     fontSize: '1.5em',
@@ -78,3 +44,5 @@ export default function SearchResults({ searchResults, onClick }) {
     </>
   );
 }
+
+export default React.memo(SearchResults);

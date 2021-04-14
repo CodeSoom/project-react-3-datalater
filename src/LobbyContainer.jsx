@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 
 import { useHistory } from 'react-router-dom';
 
@@ -26,15 +26,15 @@ export default function LobbyContainer() {
   const players = useSelector(get('players'));
   const isEachAddressRegistered = useSelector(get('isEachAddressRegistered'));
 
-  function handleClick() {
+  const handleClick = useCallback(() => {
     dispatch(requestMidpoints());
     history.push('/result');
-  }
+  }, [dispatch]);
 
-  function handleClickSearchButton(id) {
+  const handleClickSearchButton = useCallback((id) => {
     const url = `/search/${id}`;
     history.push(url);
-  }
+  }, [dispatch]);
 
   if (isEmptyArray(players)) {
     return (

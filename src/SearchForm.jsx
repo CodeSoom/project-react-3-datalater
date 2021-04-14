@@ -2,7 +2,7 @@ import React from 'react';
 
 import TextField from './TextField';
 
-export default function SearchForm({ fields, onChange, onSubmit }) {
+function SearchForm({ fields, onChange, onSubmit }) {
   const { query } = fields;
 
   return (
@@ -18,3 +18,5 @@ export default function SearchForm({ fields, onChange, onSubmit }) {
     </form>
   );
 }
+
+export default React.memo(SearchForm);
