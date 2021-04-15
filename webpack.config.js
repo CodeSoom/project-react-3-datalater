@@ -9,7 +9,6 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  mode: 'development',
   entry: path.resolve(__dirname, 'src/index.jsx'),
   output: {
     publicPath: '/',
@@ -40,6 +39,7 @@ module.exports = {
     extensions: ['.js', '.jsx'],
   },
   devServer: {
+    contentBase: './dist',
     historyApiFallback: true,
   },
 };
