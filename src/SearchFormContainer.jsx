@@ -32,7 +32,7 @@ export default function SearchFormContainer() {
     }
 
     dispatch(requestSearch());
-  }, [dispatch]);
+  }, [dispatch, query]);
 
   return (
     <div>
