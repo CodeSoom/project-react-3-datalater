@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 
 import PlaceItem from './PlaceItem';
 
-function SearchResults({ searchResults, onClick }) {
+export default function SearchResults({ searchResults, onClick }) {
   const Header = styled.header({
     margin: '40px 0',
     fontSize: '1.5em',
@@ -44,5 +44,3 @@ function SearchResults({ searchResults, onClick }) {
     </>
   );
 }
-
-export default React.memo(SearchResults);
