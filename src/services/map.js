@@ -1,3 +1,5 @@
+import { isEmptyObject } from '../utils';
+
 const DEFAULT_X = 33.450701;
 const DEFAULT_Y = 126.570667;
 
@@ -20,7 +22,7 @@ function createMarker({
   });
 }
 
-export function loadMap({ selectedPlaces, midpoints }) {
+export function loadMap({ selectedPlaces, midpoints, selectedMidpoint }) {
   window.kakao.maps.load(() => {
     const container = document.getElementById('map');
 
@@ -56,7 +58,22 @@ export function loadMap({ selectedPlaces, midpoints }) {
     const imageSize = new window.kakao.maps.Size(24, 35);
     const markerImage = new window.kakao.maps.MarkerImage(imageSrc, imageSize);
 
-    midpoints.forEach(({ name, x, y }) => {
+    if (isEmptyObject(selectedMidpoint)) {
+      midpoints.forEach(({ name, x, y }) => {
+        const position = new window.kakao.maps.LatLng(+y, +x);
+
+        createMarker({
+          map,
+          position,
+          title: name,
+          image: markerImage,
+        });
+
+        bounds.extend(position);
+      });
+    } else {
+      const { name, x, y } = selectedMidpoint;
+
       const position = new window.kakao.maps.LatLng(+y, +x);
 
       createMarker({
@@ -66,8 +83,15 @@ export function loadMap({ selectedPlaces, midpoints }) {
         image: markerImage,
       });
 
+      const customOverlay = new window.kakao.maps.CustomOverlay({
+        position: getPosition(+y - 0.001, +x),
+        content: `<div id="selectedplace">${name}</div>`,
+      });
+
+      customOverlay.setMap(map);
+
       bounds.extend(position);
-    });
+    }
 
     map.setBounds(bounds);
   });

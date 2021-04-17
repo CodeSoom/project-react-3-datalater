@@ -36,7 +36,7 @@ describe('MidpointButton', () => {
     it('renders "중간지점 찾기" button', () => {
       const { container } = renderMidpointButton(isEachAddressRegistered);
 
-      expect(container).toHaveTextContent('참여 인원의 주소가 모두 등록되지 않았습니다');
+      expect(container).toHaveTextContent('출발지점을 모두 입력해주세요');
     });
   });
 });

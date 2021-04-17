@@ -13,6 +13,7 @@ import { get } from './utils';
 export default function MapContainer() {
   const players = useSelector(get('players'));
   const midpoints = useSelector(get('midpoints'));
+  const selectedMidpoint = useSelector(get('selectedMidpoint'));
 
   const selectedPlaces = players.map(({ selectedPlace }) => selectedPlace);
 
@@ -26,9 +27,13 @@ export default function MapContainer() {
     document.body.appendChild(script);
 
     script.onload = () => {
-      loadMap({ selectedPlaces, midpoints });
+      loadMap({
+        selectedPlaces,
+        midpoints,
+        selectedMidpoint,
+      });
     };
-  }, [players, midpoints]);
+  }, [players, midpoints, selectedMidpoint]);
 
   const Map = styled.div({
     width: size.mapWidth,
