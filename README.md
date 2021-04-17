@@ -4,4 +4,4 @@
 
 ## Feature
 
-![3-col-2-row](https://user-images.githubusercontent.com/8105528/114350328-07a30c80-9ba4-11eb-8492-8a5479dca632.jpeg)
+![4col-2row](https://user-images.githubusercontent.com/8105528/115105255-ba0a1380-9f98-11eb-86c0-41e26d2e8d96.jpeg)
