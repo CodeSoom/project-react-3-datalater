@@ -9,6 +9,7 @@ import reducer, {
   selectPlace,
   setMidpoints,
   requestMidpoints,
+  selectMidpoint,
 } from './slice';
 
 const middlewares = getDefaultMiddleware();
@@ -197,5 +198,21 @@ describe('reducer', () => {
     const state = reducer(initialState, setMidpoints(midpoints));
 
     expect(state.midpoints).toHaveLength(1);
+  });
+
+  it('change selected midpoint', () => {
+    const initialState = {
+      midpoints: [
+        {
+          id: 0, name: '복정역1', address: '복정역 주소1', x: 127, y: 37,
+        },
+      ],
+    };
+
+    const state = reducer(initialState, selectMidpoint(0));
+
+    expect(state.selectedMidpoint).toEqual({
+      id: 0, name: '복정역1', address: '복정역 주소1', x: 127, y: 37,
+    });
   });
 });

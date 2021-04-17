@@ -1,16 +1,20 @@
 import React from 'react';
 
-import { render } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import MidpointContainer from './MidpointContainer';
 
 jest.mock('react-redux');
 
 describe('MidpointContainer', () => {
+  const dispatch = jest.fn();
+
   beforeEach(() => {
     jest.clearAllMocks();
+
+    useDispatch.mockImplementation(() => dispatch);
 
     useSelector.mockImplementation((selector) => selector({
       midpoints: given.midpoints,
@@ -28,9 +32,15 @@ describe('MidpointContainer', () => {
   });
 
   context('with midpoints', () => {
+    const id = 0;
+    const name = '복정역';
+    const address = '복정역 주소';
+    const x = 127;
+    const y = 37;
+
     const midpoints = [
       {
-        id: 0, name: '중간1', addres: '중간1 주소', x: 126, y: 37,
+        id, name, address, x, y,
       },
     ];
 
@@ -39,7 +49,18 @@ describe('MidpointContainer', () => {
     it('renders midpoints', () => {
       const { queryByText } = render(<MidpointContainer />);
 
-      expect(queryByText('중간1')).not.toBeNull();
+      expect(queryByText(name)).not.toBeNull();
+    });
+
+    it('selects midpoint', () => {
+      const { getByText } = render(<MidpointContainer />);
+
+      fireEvent.click(getByText(name));
+
+      expect(dispatch).toBeCalledWith({
+        type: 'application/selectMidpoint',
+        payload: id,
+      });
     });
   });
 });

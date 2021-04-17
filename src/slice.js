@@ -8,7 +8,7 @@ import {
 
 import { saveItem } from './services/storage';
 
-import { isEmptyObject } from './utils';
+import { equal, isEmptyObject } from './utils';
 
 function hasAddress(player) {
   return !isEmptyObject(player.selectedPlace);
@@ -31,6 +31,7 @@ const { actions, reducer } = createSlice({
     searchResults: [],
     isEachAddressRegistered: false,
     midpoints: [],
+    selectedMidpoint: {},
   },
   reducers: {
     changeSearchField(state, { payload: { name, value } }) {
@@ -81,6 +82,15 @@ const { actions, reducer } = createSlice({
         midpoints,
       };
     },
+
+    selectMidpoint(state, { payload: id }) {
+      const { midpoints } = state;
+
+      return {
+        ...state,
+        selectedMidpoint: midpoints.find(equal('id', id)),
+      };
+    },
   },
 });
 
@@ -89,6 +99,7 @@ export const {
   setSearchResults,
   selectPlace,
   setMidpoints,
+  selectMidpoint,
 } = actions;
 
 export function requestSearch() {

@@ -18,8 +18,9 @@ function PlaceItem({
     padding: '1em',
     fontSize: '1.2em',
 
-    '$:hover': {
+    '&:hover': {
       cursor: 'pointer',
+      borderLeft: `6px solid ${colors.secondary}`,
     },
 
     '& a': {

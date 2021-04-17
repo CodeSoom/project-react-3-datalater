@@ -1,20 +1,29 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import styled from '@emotion/styled';
+import {
+  selectMidpoint,
+} from './slice';
 
 import { colors } from './designSystem';
 
 import { get, isEmptyArray } from './utils';
 
 export default function MidpointContainer() {
+  const dispatch = useDispatch();
+
   const midpoints = useSelector(get('midpoints'));
+
+  const handleClick = useCallback((id) => {
+    dispatch(selectMidpoint(id));
+  }, [dispatch]);
 
   const Container = styled.div();
 
   const Header = styled.header({
-    margin: '20px 0 10px 0',
+    margin: '20px 0 20px 0',
     fontSize: '1.5em',
     fontWeight: 'bold',
   });
@@ -35,8 +44,9 @@ export default function MidpointContainer() {
     padding: '1em',
     fontSize: '1.2em',
 
-    '$:hover': {
+    '&:hover': {
       cursor: 'pointer',
+      borderLeft: `6px solid ${colors.secondary}`,
     },
 
     '& a': {
@@ -56,7 +66,10 @@ export default function MidpointContainer() {
       <Header>추천 장소</Header>
       <List>
         { midpoints.map(({ id, name, address }) => (
-          <Item key={id}>
+          <Item
+            key={id}
+            onClick={() => handleClick(id)}
+          >
             <div>
               {name}
             </div>
