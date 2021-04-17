@@ -35,12 +35,10 @@ export default function SearchFormContainer() {
   }, [dispatch, query]);
 
   return (
-    <div>
-      <SearchForm
-        fields={searchFields}
-        onChange={handleChange}
-        onSubmit={handleSubmit}
-      />
-    </div>
+    <SearchForm
+      fields={searchFields}
+      onChange={handleChange}
+      onSubmit={handleSubmit}
+    />
   );
 }

@@ -45,10 +45,10 @@ describe('SearchFormContainer', () => {
       });
     });
 
-    it('renders "검색" button', () => {
-      const { getByText } = render(<SearchFormContainer />);
+    it('renders search button', () => {
+      const { getByRole } = render(<SearchFormContainer />);
 
-      fireEvent.click(getByText('검색'));
+      fireEvent.click(getByRole('button'));
 
       expect(dispatch).toBeCalled();
     });
@@ -58,9 +58,9 @@ describe('SearchFormContainer', () => {
     given('query', () => '');
 
     it('does not add', () => {
-      const { getByText } = render(<SearchFormContainer />);
+      const { getByRole } = render(<SearchFormContainer />);
 
-      fireEvent.click(getByText('검색'));
+      fireEvent.click(getByRole('button'));
 
       expect(dispatch).not.toBeCalled();
     });
