@@ -6,7 +6,7 @@ import SearchForm from './SearchForm';
 
 describe('SearchForm', () => {
   const handleChange = jest.fn();
-  const handleSubmit = jest.fn();
+  const handleSubmit = jest.fn().mockImplementation((e) => e.preventDefault());
 
   beforeEach(() => {
     handleChange.mockClear();
@@ -47,14 +47,14 @@ describe('SearchForm', () => {
     expect(handleChange).toBeCalledWith({ name: 'query', value: '복정역' });
   });
 
-  it('renders "검색" button', () => {
+  it('renders search button', () => {
     const searchFields = {
       query: '잠실역',
     };
 
-    const { getByText } = renderSearchForm(searchFields);
+    const { getByRole } = renderSearchForm(searchFields);
 
-    fireEvent.click(getByText('검색'));
+    fireEvent.click(getByRole('button'));
 
     expect(handleSubmit).toBeCalled();
   });

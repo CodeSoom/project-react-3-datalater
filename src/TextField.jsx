@@ -2,11 +2,12 @@ import React from 'react';
 
 import styled from '@emotion/styled';
 
-import { colors } from './designSystem';
+import { AiOutlineSearch } from 'react-icons/ai';
 
-const Wrapper = styled.div({
-  display: 'flex',
-  justifyContent: 'space-between',
+import { breakpoints, colors } from './designSystem';
+
+const Contaienr = styled.div({
+  position: 'relative',
 });
 
 const Label = styled.label({
@@ -19,20 +20,35 @@ const Label = styled.label({
 const Input = styled.input({
   flex: 4,
   fontSize: '1.2em',
-  padding: '0.3em',
-  marginRight: '10px',
+  padding: '0.3em calc(0.3em + 20px)',
+  border: 'none',
+  borderBottom: `1px solid ${colors.gray}`,
+  width: '100vw',
+  position: 'relative',
+  left: '50%',
+  right: '50%',
+  marginLeft: '-50vw',
+  marginRight: '-50vw',
+
+  [breakpoints.minDesktop]: {
+    width: '100%',
+    position: 'static',
+    margin: 0,
+  },
 });
 
 const Button = styled.button({
+  position: 'absolute',
+  right: '0',
+
   flex: 1,
   fontSize: '1.2em',
-  width: '100%',
+
   padding: '0.3em',
   cursor: 'pointer',
-  border: `1px solid ${colors.gray}`,
-  borderRadius: '4px',
-  background: `linear-gradient(${colors.darkBlue}, ${colors.lightBlue})`,
-  color: colors.white,
+  border: 'none',
+  background: 'none',
+  color: colors.black,
 
   '&:hover': {
     opacity: 0.95,
@@ -44,7 +60,7 @@ const Button = styled.button({
 });
 
 export default function TextField({
-  label, type, name, value, onChange, onSubmit,
+  label, type, name, value, onChange,
 }) {
   const id = `input-${name}`;
 
@@ -54,23 +70,19 @@ export default function TextField({
   }
 
   return (
-    <div>
+    <Contaienr>
       <Label htmlFor={id}>{label}</Label>
-      <Wrapper>
-        <Input
-          id={id}
-          type={type}
-          name={name}
-          value={value}
-          onChange={handleChange}
-        />
-        <Button
-          type="button"
-          onClick={onSubmit}
-        >
-          검색
-        </Button>
-      </Wrapper>
-    </div>
+      <Input
+        id={id}
+        type={type}
+        name={name}
+        value={value}
+        onChange={handleChange}
+        placeholder="주소 또는 장소명을 입력하세요"
+      />
+      <Button onClick={onsubmit}>
+        <AiOutlineSearch />
+      </Button>
+    </Contaienr>
   );
 }

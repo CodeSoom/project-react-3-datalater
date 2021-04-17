@@ -34,10 +34,10 @@ describe('SearchPage', () => {
     expect(queryByLabelText('주소 입력')).not.toBeNull();
   });
 
-  it('renders "검색" button', () => {
-    const { queryByText } = renderSearchPage();
+  it('renders search button', () => {
+    const { queryByRole } = renderSearchPage();
 
-    expect(queryByText('검색')).not.toBeNull();
+    expect(queryByRole('button')).not.toBeNull();
   });
 
   it('renders search results', () => {
