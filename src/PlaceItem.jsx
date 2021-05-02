@@ -31,7 +31,7 @@ function PlaceItem({
 
   return (
     <Item>
-      <a href="/" onClick={handleClick}>
+      <a href="/lobby" onClick={handleClick}>
         <div>{name}</div>
         <div>{address}</div>
       </a>

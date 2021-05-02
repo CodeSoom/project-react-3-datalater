@@ -2,6 +2,7 @@ import React from 'react';
 
 import styled from '@emotion/styled';
 
+import BackButtonHeader from './BackButtonHeader';
 import MapContainer from './MapContainer';
 import MidpointContainer from './MidpointContainer';
 
@@ -12,6 +13,7 @@ export default function ResultPage() {
 
   return (
     <>
+      <BackButtonHeader />
       <MapContainer />
       <Container>
         <MidpointContainer />

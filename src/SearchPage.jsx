@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 
 import styled from '@emotion/styled';
 
+import BackButtonHeader from './BackButtonHeader';
 import SearchFormContainer from './SearchFormContainer';
 import SearchResultsContainer from './SearchResultsContainer';
 
@@ -15,11 +16,14 @@ export default function SearchPage({ params }) {
   });
 
   return (
-    <Container>
-      <SearchFormContainer />
-      <SearchResultsContainer
-        playerId={playerId}
-      />
-    </Container>
+    <>
+      <BackButtonHeader />
+      <Container>
+        <SearchFormContainer />
+        <SearchResultsContainer
+          playerId={playerId}
+        />
+      </Container>
+    </>
   );
 }

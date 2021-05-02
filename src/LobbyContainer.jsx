@@ -34,7 +34,7 @@ export default function LobbyContainer() {
   const handleClickSearchButton = useCallback((id) => {
     const url = `/search/${id}`;
     history.push(url);
-  }, [dispatch]);
+  });
 
   if (isEmptyArray(players)) {
     return (
