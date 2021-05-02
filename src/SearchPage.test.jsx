@@ -2,13 +2,22 @@ import React from 'react';
 
 import { MemoryRouter } from 'react-router-dom';
 
-import { render } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 
 import { useSelector } from 'react-redux';
 
 import SearchPage from './SearchPage';
 
 jest.mock('react-redux');
+
+const mockPush = jest.fn();
+
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useHistory() {
+    return { push: mockPush };
+  },
+}));
 
 describe('SearchPage', () => {
   beforeEach(() => {
@@ -34,10 +43,16 @@ describe('SearchPage', () => {
     expect(queryByLabelText('주소 입력')).not.toBeNull();
   });
 
-  it('renders search button', () => {
-    const { queryByRole } = renderSearchPage();
+  it('renders search and back button', () => {
+    const { queryByRole, getByRole } = renderSearchPage();
 
-    expect(queryByRole('button')).not.toBeNull();
+    expect(queryByRole('button', { name: 'search' })).not.toBeNull();
+
+    expect(queryByRole('button', { name: 'back' })).not.toBeNull();
+
+    fireEvent.click(getByRole('button', { name: 'back' }));
+
+    expect(mockPush).toBeCalledWith('/lobby');
   });
 
   it('renders search results', () => {

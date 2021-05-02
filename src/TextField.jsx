@@ -80,7 +80,10 @@ export default function TextField({
         onChange={handleChange}
         placeholder="주소 또는 장소명을 입력하세요"
       />
-      <Button onClick={onsubmit}>
+      <Button
+        aria-label="search"
+        onClick={onsubmit}
+      >
         <AiOutlineSearch />
       </Button>
     </Contaienr>

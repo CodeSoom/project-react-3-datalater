@@ -3,7 +3,6 @@ import React from 'react';
 import {
   Switch,
   Route,
-  Link,
 } from 'react-router-dom';
 
 import { useDispatch } from 'react-redux';
@@ -12,6 +11,7 @@ import styled from '@emotion/styled';
 
 import { breakpoints } from './designSystem';
 
+import HomePage from './HomePage';
 import LobbyPage from './LobbyPage';
 import SearchPage from './SearchPage';
 import ResultPage from './ResultPage';
@@ -59,32 +59,15 @@ export default function App() {
     },
   });
 
-  const Header = styled.header({
-    margin: '0',
-    background: '#eee',
-    textAlign: 'center',
-    fontSize: '0.5em',
-  });
-
-  const Main = styled.main({
-    height: '100%',
-  });
-
   return (
     <Container>
-      <Header>
-        <h1>
-          <Link to="/">Where do we meet?</Link>
-        </h1>
-      </Header>
-      <Main>
-        <Switch>
-          <Route exact path="/" component={LobbyPage} />
-          <Route path="/search/:id" component={SearchPage} />
-          <Route path="/result" component={ResultPage} />
-          <Route component={NotFoundPage} />
-        </Switch>
-      </Main>
+      <Switch>
+        <Route exact path="/" component={HomePage} />
+        <Route exact path="/lobby" component={LobbyPage} />
+        <Route path="/search/:id" component={SearchPage} />
+        <Route path="/result" component={ResultPage} />
+        <Route component={NotFoundPage} />
+      </Switch>
     </Container>
   );
 }

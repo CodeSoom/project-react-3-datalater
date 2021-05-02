@@ -32,10 +32,10 @@ describe('PlaceItem', () => {
     expect(container).toHaveTextContent(address);
   });
 
-  it('renders links to path /', () => {
+  it('renders links to path /lobby', () => {
     const { container } = renderPlaceItem();
 
-    expect(container.innerHTML).toContain('<a href="/"');
+    expect(container.innerHTML).toContain('<a href="/lobby"');
   });
 
   it('selects item', () => {

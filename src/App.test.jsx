@@ -49,14 +49,16 @@ describe('App', () => {
   }
 
   context('with path /', () => {
-    it('renders header', () => {
+    it('renders description text', () => {
       const { container } = renderApp({ path: '/' });
 
-      expect(container).toHaveTextContent('Where do we meet?');
+      expect(container).toHaveTextContent('중간지점');
     });
+  });
 
+  context('with page /lobby', () => {
     it('renders search form', () => {
-      const { container } = renderApp({ path: '/' });
+      const { container } = renderApp({ path: '/lobby' });
 
       expect(container).toHaveTextContent('출발지점을 입력하세요');
     });

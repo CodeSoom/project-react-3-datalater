@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { render } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 
 import { useSelector } from 'react-redux';
 
@@ -13,6 +13,15 @@ import {
 jest.mock('react-redux');
 
 jest.mock('./services/map');
+
+const mockPush = jest.fn();
+
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useHistory() {
+    return { push: mockPush };
+  },
+}));
 
 describe('ResultPage', () => {
   beforeEach(() => {
@@ -36,6 +45,14 @@ describe('ResultPage', () => {
 
       expect(container).toHaveTextContent('중간지점을 찾지 못했습니다');
     });
+
+    it('renders back button', () => {
+      const { getByRole } = render(<ResultPage />);
+
+      fireEvent.click(getByRole('button', { name: 'back' }));
+
+      expect(mockPush).toBeCalledWith('/lobby');
+    });
   });
 
   context('with midpoint places', () => {
@@ -56,6 +73,14 @@ describe('ResultPage', () => {
       script.onload();
 
       expect(loadMap).toHaveBeenCalled();
+    });
+
+    it('renders back button', () => {
+      const { getByRole } = render(<ResultPage />);
+
+      fireEvent.click(getByRole('button', { name: 'back' }));
+
+      expect(mockPush).toBeCalledWith('/lobby');
     });
   });
 });
